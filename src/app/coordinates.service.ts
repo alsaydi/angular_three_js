@@ -8,13 +8,14 @@ export class CoordinatesService {
 
   constructor() { }
 
-  drawGrid(params: any, scene: THREE.Scene): any {
+  drawGrid(params: any, scene: THREE.Scene): void {
     params = params || {};
     const size = params.size !== undefined ? params.size : 100;
     const scale = params.scale !== undefined ? params.scale : 0.1;
     const orientation = params.orientation !== undefined ? params.orientation : 'x';
-    const grid = new THREE.Mesh(new THREE.PlaneGeometry(size, size, size * scale, size * scale),
-      new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true }));
+    const geometry = new THREE.PlaneGeometry(size, size, scale * size, scale * size);
+    const material = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
+    const grid = new THREE.Mesh(geometry, material);
     // Yes, these are poorly labeled! It would be a mess to fix.
     // What's really going on here:
     // "x" means "rotate 90 degrees around x", etc.
@@ -29,6 +30,14 @@ export class CoordinatesService {
       grid.rotation.z = - Math.PI / 2;
     }
     scene.add(grid);
+  }
+
+  _drawGrid(params: any, scene: THREE.Scene): void {
+    params = params || {};
+    const size = params.size !== undefined ? params.size : 100;
+    const scale = params.scale !== undefined ? params.scale : 0.1;
+    const gridHelper = new THREE.GridHelper( size, 1000 );
+    scene.add( gridHelper );
   }
 
   drawGround(params: any, scene: THREE.Scene): void {
