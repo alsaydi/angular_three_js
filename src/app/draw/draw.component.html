@@ -1,6 +1,14 @@
 <p>
   draw works!
 </p>
+<table>
+  <tr>
+    <td>Polygon sides</td><td><input [(ngModel)]='polygonSides' /> </td>
+  </tr>
+  <tr>
+    <td colspan="2"><button (click)='updateScene()'>Update</button> </td>
+  </tr>
+</table>
 <div id='container'>
   <canvas></canvas>
 </div>

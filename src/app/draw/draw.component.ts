@@ -14,14 +14,18 @@ export class DrawComponent implements OnInit, AfterContentInit {
   private scene: any;
   private renderer: any;
   private windowScale: any;
+
+  polygonSides = 5;
   constructor(private coordinatesService: CoordinatesService) { }
 
   ngOnInit() {
   }
 
-  ngAfterContentInit() {
-    console.log('ng after content init ...');
-    console.log(THREE);
+  updateScene(): void {
+    this.drawScene();
+  }
+
+  drawScene(): void {
     this.init();
     this.showGrids();
 
@@ -35,7 +39,12 @@ export class DrawComponent implements OnInit, AfterContentInit {
 
     this.addToDOM();
     this.render();
+  }
 
+  ngAfterContentInit() {
+    console.log('ng after content init ...');
+    console.log(THREE);
+    this.drawScene();
     d3.select('p').style('color', 'red');
   }
 
@@ -54,7 +63,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
   }
 
   private drawPolygon() {
-    const geo = this.getPolygonGeometry(8);
+    const geo = this.getPolygonGeometry(this.polygonSides, new THREE.Vector3(5, 5));
     const material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.FrontSide });
     const mesh = new THREE.Mesh(geo, material);
     this.scene.add(mesh);
@@ -81,7 +90,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
     return square;
   }
 
-  getPolygonGeometry(sides: number): THREE.Geometry {
+  getPolygonGeometry(sides: number, polyLocation: THREE.Vector3): THREE.Geometry {
     const geo = new THREE.Geometry();
 
     // generate vertices
@@ -89,8 +98,8 @@ export class DrawComponent implements OnInit, AfterContentInit {
       // Add 90 degrees so we start at +Y axis, rotate counterclockwise around
       const angle = (Math.PI / 2) + (pt / sides) * 2 * Math.PI;
 
-      const x = Math.cos(angle) + -1;
-      const y = Math.sin(angle) + 1;
+      const x = Math.cos(angle) + polyLocation.x;
+      const y = Math.sin(angle) + polyLocation.y;
       geo.vertices.push(new THREE.Vector3(x, y, 0));
     }
 
