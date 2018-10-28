@@ -16,6 +16,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
   private windowScale: any;
 
   polygonSides = 5;
+  polygonRadius = 5;
   constructor(private coordinatesService: CoordinatesService) { }
 
   ngOnInit() {
@@ -63,7 +64,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
   }
 
   private drawPolygon() {
-    const geo = this.getPolygonGeometry(this.polygonSides, new THREE.Vector3(5, 5), 13);
+    const geo = this.getPolygonGeometry(this.polygonSides, new THREE.Vector3(5, 5), this.polygonRadius);
     const material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.FrontSide });
     const mesh = new THREE.Mesh(geo, material);
     this.scene.add(mesh);

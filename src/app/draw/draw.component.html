@@ -3,12 +3,22 @@
 </p>
 <table>
   <tr>
-    <td>Polygon sides</td><td><input [(ngModel)]='polygonSides' /> </td>
+    <td>Polygon Sides</td><td>
+      <input [(ngModel)]='polygonSides' type="number" min="3"  /> 
+      <mat-slider thumbLabel tickInterval="1"  min="3" max="20" step="1" [(ngModel)]=polygonSides (change)='updateScene()' ></mat-slider>
+    </td>
   </tr>
+  <tr>
+      <td>Polygon Radius</td><td>
+        <input [(ngModel)]='polygonRadius' type="number" min="3"  /> 
+        <mat-slider thumbLabel tickInterval="1"  min="3" max="20" step="1" [(ngModel)]=polygonRadius (change)='updateScene()' ></mat-slider>
+      </td>
+    </tr>
   <tr>
     <td colspan="2"><button (click)='updateScene()'>Update</button> </td>
   </tr>
 </table>
+
 <div id='container'>
   <canvas></canvas>
 </div>
