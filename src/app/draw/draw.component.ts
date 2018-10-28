@@ -22,11 +22,11 @@ export class DrawComponent implements OnInit, AfterContentInit {
   }
 
   updateScene(): void {
-    this.drawScene();
+    this.fillScene();
   }
 
-  drawScene(): void {
-    this.init();
+  fillScene(): void {
+    this.initWorld();
     this.showGrids();
 
     // creating and adding the triangle to the scene
@@ -44,7 +44,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
   ngAfterContentInit() {
     console.log('ng after content init ...');
     console.log(THREE);
-    this.drawScene();
+    this.fillScene();
     d3.select('p').style('color', 'red');
   }
 
@@ -63,7 +63,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
   }
 
   private drawPolygon() {
-    const geo = this.getPolygonGeometry(this.polygonSides, new THREE.Vector3(5, 5));
+    const geo = this.getPolygonGeometry(this.polygonSides, new THREE.Vector3(5, 5), 13);
     const material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.FrontSide });
     const mesh = new THREE.Mesh(geo, material);
     this.scene.add(mesh);
@@ -90,7 +90,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
     return square;
   }
 
-  getPolygonGeometry(sides: number, polyLocation: THREE.Vector3): THREE.Geometry {
+  getPolygonGeometry(sides: number, polyLocation: THREE.Vector3, radius: number): THREE.Geometry {
     const geo = new THREE.Geometry();
 
     // generate vertices
@@ -98,8 +98,8 @@ export class DrawComponent implements OnInit, AfterContentInit {
       // Add 90 degrees so we start at +Y axis, rotate counterclockwise around
       const angle = (Math.PI / 2) + (pt / sides) * 2 * Math.PI;
 
-      const x = Math.cos(angle) + polyLocation.x;
-      const y = Math.sin(angle) + polyLocation.y;
+      const x = radius * Math.cos(angle) + polyLocation.x;
+      const y = radius * Math.sin(angle) + polyLocation.y;
       geo.vertices.push(new THREE.Vector3(x, y, 0));
     }
 
@@ -109,7 +109,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
     return geo;
   }
 
-  init(): any {
+  initWorld(): any {
     //  Set up some parameters
     const canvasWidth = window.innerWidth * 0.5;
     const canvasHeight = window.innerHeight * 0.5;
