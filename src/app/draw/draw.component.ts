@@ -111,12 +111,13 @@ export class DrawComponent implements OnInit, AfterContentInit {
   }
 
   initWorld(): any {
+    // scene
+    this.scene = new THREE.Scene();
+
     //  Set up some parameters
     const canvasWidth = window.innerWidth * 0.5;
     const canvasHeight = window.innerHeight * 0.5;
     const canvasRatio = canvasWidth / canvasHeight;
-    // scene
-    this.scene = new THREE.Scene();
 
     // Camera: Y up, X right, Z up
     this.windowScale = 12;
@@ -124,6 +125,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
     const windowHeight = this.windowScale;
 
     this.camera = new THREE.OrthographicCamera(windowWidth / -2, windowWidth / 2, windowHeight / 2, windowHeight / -2, 0, 40);
+    // this.camera = new THREE.PerspectiveCamera(45, windowWidth / windowHeight, 1, 1000);
 
     const focus = new THREE.Vector3(5, 5, 0);
     this.camera.position.x = focus.x;
