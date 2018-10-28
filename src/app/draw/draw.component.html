@@ -1,24 +1,30 @@
-<p>
-  draw works!
-</p>
-<table>
-  <tr>
-    <td>Polygon Sides</td><td>
-      <input [(ngModel)]='polygonSides' type="number" min="3"  /> 
-      <mat-slider thumbLabel tickInterval="1"  min="3" max="20" step="1" [(ngModel)]=polygonSides (change)='updateScene()' ></mat-slider>
-    </td>
-  </tr>
-  <tr>
-      <td>Polygon Radius</td><td>
-        <input [(ngModel)]='polygonRadius' type="number" min="3"  /> 
-        <mat-slider thumbLabel tickInterval="1"  min="3" max="20" step="1" [(ngModel)]=polygonRadius (change)='updateScene()' ></mat-slider>
-      </td>
-    </tr>
-  <tr>
-    <td colspan="2"><button (click)='updateScene()'>Update</button> </td>
-  </tr>
-</table>
+<div class="container content">
+  <p>
+    draw works!
+  </p>
+  <div class="row">
+    <div class="col-md-3">Polygon Sides</div>
+    <div class="col-md-4">
+      <input [(ngModel)]='polygonSides' type="number" min="3" />
+    </div>
+    <div class="col-md-5">
+      <mat-slider thumbLabel tickInterval="1" min="3" max="20" step="1" [(ngModel)]=polygonSides (change)='updateScene()'></mat-slider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">Polygon Radius</div>
+    <div class="col-md-4">
+      <input [(ngModel)]='polygonRadius' type="number" min="3" />
+    </div>
+    <div class="col-md-5">
+      <mat-slider thumbLabel tickInterval="1" min="3" max="20" step="1" [(ngModel)]=polygonRadius (change)='updateScene()'></mat-slider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 btn btn-primary"><button (click)='updateScene()'>Update</button> </div>
+  </div>
 
-<div id='container'>
-  <canvas></canvas>
+  <div class="row" id='container'>
+    <canvas></canvas>
+  </div>
 </div>
