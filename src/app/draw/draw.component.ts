@@ -38,6 +38,8 @@ export class DrawComponent implements OnInit, AfterContentInit {
     // polygon with n sides
     this.drawPolygon();
 
+    this.drawCylinder();
+
     this.addToDOM();
     this.render();
   }
@@ -65,7 +67,7 @@ export class DrawComponent implements OnInit, AfterContentInit {
 
   private drawPolygon() {
     const geo = this.getPolygonGeometry(this.polygonSides, new THREE.Vector3(5, 5), this.polygonRadius);
-    const material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.FrontSide });
+    const material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
     const mesh = new THREE.Mesh(geo, material);
     this.scene.add(mesh);
   }
@@ -124,8 +126,9 @@ export class DrawComponent implements OnInit, AfterContentInit {
     const windowWidth = this.windowScale * canvasRatio;
     const windowHeight = this.windowScale;
 
-    this.camera = new THREE.OrthographicCamera(windowWidth / -2, windowWidth / 2, windowHeight / 2, windowHeight / -2, 0, 40);
+    // this.camera = new THREE.OrthographicCamera(windowWidth / -2, windowWidth / 2, windowHeight / 2, windowHeight / -2, 0, 40);
     // this.camera = new THREE.PerspectiveCamera(45, windowWidth / windowHeight, 1, 1000);
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     const focus = new THREE.Vector3(5, 5, 0);
     this.camera.position.x = focus.x;
@@ -166,6 +169,13 @@ export class DrawComponent implements OnInit, AfterContentInit {
     }
 
     _addToDOM(this.renderer.domElement);
+  }
+
+  drawCylinder(): void {
+    const geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    const cylinder = new THREE.Mesh(geometry, material);
+    this.scene.add(cylinder);
   }
 
   render(): void {
