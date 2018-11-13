@@ -35,7 +35,6 @@ export class TowerComponent implements OnInit, AfterViewInit {
     this.mesh = new THREE.Mesh(geometry, material);
     // this.scene.add(this.mesh );
 
-    this.addTorusGeometryToScene();
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -54,6 +53,9 @@ export class TowerComponent implements OnInit, AfterViewInit {
     this.scene.add(lights[0]);
     this.scene.add(lights[1]);
     this.scene.add(lights[2]);
+
+    this.addTorusGeometryToScene();
+
     this.addToDOM();
     //
     // window.addEventListener( 'resize', onWindowResize, false );
@@ -61,10 +63,10 @@ export class TowerComponent implements OnInit, AfterViewInit {
 
   private addTorusGeometryToScene() {
     const data = {
-      radius: 50,
-      tube: 13,
+      radius: 105,
+      tube: 20,
       radialSegments: 26,
-      tubularSegments: 1000,
+      tubularSegments: 100,
       arc: Math.PI * 2.0
     };
 
@@ -82,7 +84,10 @@ export class TowerComponent implements OnInit, AfterViewInit {
     const t_geometry = new THREE.TorusGeometry(data.radius, data.tube, data.radialSegments, data.tubularSegments, data.arc);
 
     group.children[1].geometry = t_geometry;
-
+    group.position.setX(-310);
+    group.position.setY(-100);
+    group.rotateY(40);
+    group.rotateX(0.45 * Math.PI);
     this.scene.add(group);
     this.animate(group);
   }
@@ -97,7 +102,9 @@ export class TowerComponent implements OnInit, AfterViewInit {
       group.rotation.y += 0.005;
       self.renderer.render(currentScene, currentCamera);
     };
-    requestAnimationFrame(animateCallback);
+    // this.renderer.render(this.scene, this.camera);
+
+     requestAnimationFrame(animateCallback);
   }
 
   addToDOM(): void {
